@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProfitBuilder Lite | Free Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #3730a3;
+            --primary-light: #e0e7ff;
+            --secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --bg: #f1f5f9;
+            --card-bg: white;
+            --text: #0f172a;
+            --text-secondary: #64748b;
+            --table-stripe: #f8fafc;
+            --input-bg: #f8fafc;
+            --hover-bg: #f1f5f9;
+            --modal-footer-bg: #f8fafc;
+            --nav-hover: #f1f5f9;
+        }
+
+        [data-theme="dark"] {
+            --primary: #818cf8;
+            --primary-dark: #6366f1;
+            --primary-light: #312e81;
+            --secondary: #94a3b8;
+            --success: #34d399;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --light: #1e293b;
+            --dark: #f8fafc;
+            --border: #334155;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --table-stripe: #1e293b;
+            --input-bg: #334155;
+            --hover-bg: #334155;
+            --modal-footer-bg: #1e293b;
+            --nav-hover: #334155;
+            color-scheme: dark;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Lite Version Watermark */
+        body::before {
+            content: 'FREE VERSION - Max 3 Projects';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-25deg);
+            font-size: 3rem;
+            color: rgba(239, 68, 68, 0.06);
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 9998;
+            font-weight: 900;
+            user-select: none;
+            letter-spacing: 4px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        .upgrade-banner {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .upgrade-banner p {
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .upgrade-banner strong {
+            font-size: 16px;
+        }
+
+        .btn-upgrade {
+            background: white;
+            color: var(--primary-dark);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-upgrade:hover {
+            transform: scale(1.05);
+        }
+
+        .header {
+            background: var(--card-bg);
+            padding: 15px 30px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+        }
+
+        .lite-badge {
+            background: var(--warning);
+            color: #78350f;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .nav {
+            background: var(--card-bg);
+            padding: 8px 30px;
+            display: flex;
+            gap: 6px;
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--secondary);
+            transition: all 0.2s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: inherit;
+        }
+
+        .nav-item:hover {
+            background: var(--nav-hover);
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 25px;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--nav-hover);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 8px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            transition: transform 0.2s;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary);
+            opacity: 0.5;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .table-container {
+            overflow: auto;
+            max-height: 55vh;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        th {
+            background: var(--table-stripe);
+            font-weight: 700;
+            color: var(--text-secondary);
+            font-size: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        tr:hover td {
+            background: var(--hover-bg);
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        [data-theme="dark"] .badge-success {
+            background: #064e3b;
+            color: #6ee7b7;
+        }
+
+        .badge-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        [data-theme="dark"] .badge-danger {
+            background: #7f1d1d;
+            color: #fca5a5;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .upgrade-card {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px solid var(--warning);
+            text-align: center;
+        }
+
+        [data-theme="dark"] .upgrade-card {
+            background: linear-gradient(135deg, #422006, #78350f);
+            border: 2px solid var(--warning);
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: var(--card-bg);
+            padding: 14px 18px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 280px;
+            animation: toastIn 0.3s;
+            border-left: 4px solid var(--primary);
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text);
+        }
+
+        .toast.success {
+            border-left-color: var(--success);
+        }
+
+        .toast.error {
+            border-left-color: var(--danger);
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .feature-compare {
+            font-size: 13px;
+            line-height: 2;
+            text-align: left;
+        }
+
+        .feature-compare .pro {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .feature-compare .lite {
+            color: var(--danger);
+        }
+
+        .contact-info {
+            background: rgba(79, 70, 229, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        .app-footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            border-top: 1px solid var(--border);
+            background: var(--card-bg);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🏗️</div>
+            <div>
+                <div style="line-height: 1;">ProfitBuilder Lite</div>
+                <span class="page-subtitle" style="font-size: 11px;">Free Version - Max 3 Projects</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-sm btn-secondary" onclick="toggleTheme()">🌙 Dark Mode</button>
+            <span class="lite-badge">FREE</span>
+        </div>
+    </header>
+
+    <nav class="nav" id="mainNav">
+        <button class="nav-item active" data-page="dashboard">📊 Dashboard</button>
+        <button class="nav-item" data-page="projects" onclick="showUpgradeMessage()">🗂️ Projects</button>
+        <button class="nav-item" data-page="clients" onclick="showUpgradeMessage()">👥 Clients</button>
+        <button class="nav-item" data-page="transactions" onclick="showUpgradeMessage()">💰 Transactions</button>
+        <button class="nav-item" data-page="checks" onclick="showUpgradeMessage()">💳 Cheques/Bills</button>
+        <button class="nav-item" data-page="reports" onclick="showUpgradeMessage()">📈 Reports</button>
+        <button class="nav-item" data-page="settings" onclick="showUpgradeMessage()">⚙️ Settings</button>
+    </nav>
+
+    <div class="container">
+        <!-- Upgrade Banner -->
+        <div class="upgrade-banner">
+            <p>✨ <strong>FREE Lite Version</strong> | Max 3 Projects | USD Only | <strong>Upgrade to Pro</strong> for Unlimited Features</p>
+            <a href="https://digitalyar.company/product/spa01-profitbuilder/" target="_blank" class="btn-upgrade">Get Pro Version ➜</a>
+        </div>
+
+        <!-- Dashboard Page (Only Active Page) -->
+        <div class="page active" id="page-dashboard">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">📊 Financial Dashboard</h1>
+                    <p class="page-subtitle">Overview (Limited Free Version)</p>
+                </div>
+                <button class="btn btn-primary" onclick="showUpgradeMessage()">➕ New Transaction</button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-3">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #d1fae5; color: var(--success);">💰</div>
+                    <div class="stat-info">
+                        <div class="stat-label">Total Income</div>
+                        <div class="stat-value" id="dashTotalIncome">$0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fee2e2; color: var(--danger);">💸</div>
+                    <div class="stat-info">
+                        <div class="stat-label">Total Expense</div>
+                        <div class="stat-value" id="dashTotalExpense">$0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: var(--primary-light); color: var(--primary);">📈</div>
+                    <div class="stat-info">
+                        <div class="stat-label">Net Profit</div>
+                        <div class="stat-value" id="dashNetProfit">$0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Table (Limited to 3) -->
+            <div class="card">
+                <h3 style="margin-bottom: 14px;">📋 Your Projects <span style="font-size: 12px; color: var(--warning);">(Max 3 in Free Version)</span></h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Project Name</th>
+                                <th>Budget</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectsPreviewTable">
+                            <tr>
+                                <td colspan="4" class="empty-state">
+                                    <div class="empty-state-icon">📭</div>
+                                    No projects yet<br>
+                                    <small>Free version supports max 3 projects</small>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn btn-primary btn-sm" style="margin-top: 12px; width: 100%;" onclick="addDemoProject()">➕ Add New Project</button>
+                <p style="font-size: 11px; color: var(--text-secondary); margin-top: 10px; text-align: center;">
+                    ⚠️ Limited to 3 projects. <a href="https://digitalyar.company/product/spa01-profitbuilder/" target="_blank" style="color: var(--primary);">Upgrade to Pro</a> for unlimited projects.
+                </p>
+            </div>
+
+            <!-- Recent Transactions (Preview Only) -->
+            <div class="card">
+                <h3 style="margin-bottom: 14px;">⏱️ Recent Transactions <span style="font-size: 12px; color: var(--warning);">(Preview Only)</span></h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Project</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentTransactionsPreview">
+                            <tr>
+                                <td colspan="4" class="empty-state">
+                                    <div class="empty-state-icon">🔒</div>
+                                    Full transaction history available in Pro version
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn btn-secondary btn-sm" style="margin-top: 12px; width: 100%;" onclick="showUpgradeMessage()">View All Transactions 🔒</button>
+            </div>
+
+            <!-- Upgrade Card - Feature Comparison -->
+            <div class="card upgrade-card">
+                <h3>🚀 Upgrade to ProfitBuilder Pro</h3>
+                <div class="feature-compare">
+                    <p>✅ <span class="pro">PRO Version</span>: Unlimited Projects | Multi-Currency | Cheques/Bills | Advanced Reports | Backup/Restore | CSV Export | Invoices | Client Management</p>
+                    <p>❌ <span class="lite">LITE Version</span>: Only 3 Projects | USD Only | No Reports | No Export | No Backups | Basic Dashboard Only</p>
+                </div>
+                <a href="https://digitalyar.company/product/spa01-profitbuilder/" target="_blank" class="btn-upgrade" style="margin-top: 12px; background: var(--primary); color: white; padding: 12px 30px; font-size: 16px; display: inline-block;">Purchase Pro Version Now</a>
+                
+                <div class="contact-info">
+                    <p>📧 <strong>Email:</strong> <a href="mailto:INFO@digitalyar.company" style="color: var(--primary);">INFO@digitalyar.company</a></p>
+                    <p>🌐 <strong>Website:</strong> <a href="https://digitalyar.company" target="_blank" style="color: var(--primary);">digitalyar.company</a></p>
+                    <p>🛒 <strong>Product Page:</strong> <a href="https://digitalyar.company/product/spa01-profitbuilder/" target="_blank" style="color: var(--primary);">digitalyar.company/product/spa01-profitbuilder/</a></p>
+                </div>
+                
+                <p style="font-size: 11px; margin-top: 12px; opacity: 0.7;">
+                    🎁 Check website for special offers and pricing
+                </p>
+            </div>
+
+            <!-- What You're Missing Card -->
+            <div class="card">
+                <h3 style="margin-bottom: 14px;">🔒 Pro Features (Unlock with Upgrade)</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                    <div style="padding: 10px; background: var(--hover-bg); border-radius: 8px;">
+                        <span style="font-size: 20px;">📊</span>
+                        <p style="font-size: 12px; margin-top: 5px;"><strong>Advanced Reports</strong><br>Profit margins, ROI analysis, charts</p>
+                    </div>
+                    <div style="padding: 10px; background: var(--hover-bg); border-radius: 8px;">
+                        <span style="font-size: 20px;">💱</span>
+                        <p style="font-size: 12px; margin-top: 5px;"><strong>Multi-Currency</strong><br>USD, EUR, GBP, CAD, AUD + exchange rates</p>
+                    </div>
+                    <div style="padding: 10px; background: var(--hover-bg); border-radius: 8px;">
+                        <span style="font-size: 20px;">💳</span>
+                        <p style="font-size: 12px; margin-top: 5px;"><strong>Cheques & Bills</strong><br>Track receivables, payables, due dates</p>
+                    </div>
+                    <div style="padding: 10px; background: var(--hover-bg); border-radius: 8px;">
+                        <span style="font-size: 20px;">💾</span>
+                        <p style="font-size: 12px; margin-top: 5px;"><strong>Backup & Restore</strong><br>Export/Import your data safely</p>
+                    </div>
+                    <div style="padding: 10px; background: var(--hover-bg); border-radius: 8px;">
+                        <span style="font-size: 20px;">🧾</span>
+                        <p style="font-size: 12px; margin-top: 5px;"><strong>Invoices</strong><br>Generate professional invoices</p>
+                    </div>
+                    <div style="padding: 10px; background: var(--hover-bg); border-radius: 8px;">
+                        <span style="font-size: 20px;">👥</span>
+                        <p style="font-size: 12px; margin-top: 5px;"><strong>Client Management</strong><br>Track client profitability</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <p><strong>Digital Yar</strong> - Professional Software Solutions</p>
+        <div class="footer-links">
+            <a href="https://digitalyar.company" target="_blank">🌐 digitalyar.company</a>
+            <a href="mailto:INFO@digitalyar.company">📧 INFO@digitalyar.company</a>
+            <a href="https://digitalyar.company/product/spa01-profitbuilder/" target="_blank">🛒 Buy Pro Version</a>
+        </div>
+        <p style="font-size: 10px; margin-top: 10px;">ProfitBuilder Lite v1.0 | Free Version - Max 3 Projects</p>
+    </footer>
+
+    <script>
+        // Demo data for limited version
+        let demoProjects = [];
+
+        // Helper functions
+        function fmt(n) {
+            return (n || 0).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+        }
+
+        function showToast(msg, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${type === 'success' ? '✅' : '🔒'}</span>${msg}`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        function showUpgradeMessage() {
+            window.open('https://digitalyar.company/product/spa01-profitbuilder/', '_blank');
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+            const btn = document.querySelector('.btn-secondary');
+            if (btn) btn.innerHTML = isDark ? '🌙 Dark Mode' : '☀️ Light Mode';
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // Render projects table
+        function renderProjectsPreview() {
+            const tbody = document.getElementById('projectsPreviewTable');
+            if (demoProjects.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><div class="empty-state-icon">📭</div>No projects yet<br><small>Free version supports max 3 projects</small></td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = demoProjects.map(p => `
+                <tr>
+                    <td><strong>${p.name}</strong></td>
+                    <td>$${fmt(p.budget)}</td>
+                    <td><span class="badge badge-success">Active</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-secondary" onclick="showUpgradeMessage()" style="padding: 4px 10px; font-size: 11px;">Details</button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteProject(${p.id})" style="padding: 4px 10px; font-size: 11px;">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Delete project
+        function deleteProject(id) {
+            demoProjects = demoProjects.filter(p => p.id !== id);
+            renderProjectsPreview();
+            updateDashboardStats();
+            showToast('Project deleted successfully', 'success');
+        }
+
+        // Add demo project
+        function addDemoProject() {
+            if (demoProjects.length >= 3) {
+                showToast('❌ Free version only supports 3 projects. Upgrade to Pro for unlimited projects!', 'error');
+                return false;
+            }
+
+            const projectNames = ['Skyline Tower', 'Riverside Mall', 'Green Valley', 'Harbor View', 'Metro Station'];
+            const usedNames = demoProjects.map(p => p.name);
+            let availableNames = projectNames.filter(n => !usedNames.includes(n));
+            
+            let newName = `Project ${demoProjects.length + 1}`;
+            if (availableNames.length > 0) {
+                newName = availableNames[0];
+            }
+
+            const newProject = {
+                id: Date.now(),
+                name: newName,
+                budget: Math.floor(Math.random() * 5000000) + 500000,
+                status: 'active'
+            };
+
+            demoProjects.push(newProject);
+            renderProjectsPreview();
+            updateDashboardStats();
+            showToast(`✅ Project "${newProject.name}" added successfully (${demoProjects.length}/3)`, 'success');
+
+            if (demoProjects.length === 3) {
+                showToast('⚠️ You\'ve reached the maximum 3 projects in Free version. Upgrade to Pro for unlimited projects!', 'error');
+            }
+            return true;
+        }
+
+        // Update dashboard stats based on demo projects
+        function updateDashboardStats() {
+            // Mock stats based on number of projects
+            const totalIncome = demoProjects.length * 1250000;
+            const totalExpense = demoProjects.length * 780000;
+            const netProfit = totalIncome - totalExpense;
+
+            document.getElementById('dashTotalIncome').textContent = '$' + fmt(totalIncome);
+            document.getElementById('dashTotalExpense').textContent = '$' + fmt(totalExpense);
+            document.getElementById('dashNetProfit').textContent = '$' + fmt(netProfit);
+        }
+
+        // Initialize with 2 demo projects (not 3, to show room for one more)
+        function initDemo() {
+            // Add first project
+            const project1 = {
+                id: Date.now() + 1,
+                name: 'Skyline Tower',
+                budget: 2500000,
+                status: 'active'
+            };
+            demoProjects.push(project1);
+            
+            // Add second project
+            const project2 = {
+                id: Date.now() + 2,
+                name: 'Riverside Mall',
+                budget: 1800000,
+                status: 'active'
+            };
+            demoProjects.push(project2);
+            
+            renderProjectsPreview();
+            updateDashboardStats();
+            
+            // Show welcome message
+            setTimeout(() => {
+                showToast('🎁 Welcome to ProfitBuilder Lite! Add 1 more project (max 3) or upgrade to Pro.', 'success');
+            }, 1000);
+        }
+
+        // Disable right-click and save shortcuts
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            showUpgradeMessage();
+            return false;
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey && e.key === 's') || 
+                (e.ctrlKey && e.key === 'u') || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                (e.ctrlKey && e.shiftKey && e.key === 'i') || 
+                e.key === 'F12') {
+                e.preventDefault();
+                showUpgradeMessage();
+                return false;
+            }
+        });
+
+        // Start the app
+        initDemo();
+    </script>
+</body>
+</html>
